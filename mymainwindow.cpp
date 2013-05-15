@@ -12,7 +12,7 @@ MyMainWindow::MyMainWindow()
   newton_method = new QAction("&Newton polynomials", this);
   newton_method->setCheckable(true);
   newton_method->setChecked(true);
-  connect(newton_method, SIGNAL(checked(bool)), SLOT(push_method_1()));
+  connect(newton_method, SIGNAL(triggered(bool)), SLOT(push_method_1()));
 
   splines_method = new QAction("&Splines", this);
   splines_method->setCheckable(true);
@@ -62,7 +62,7 @@ MyMainWindow::MyMainWindow()
   finish=1;
   x=NULL; f_x=NULL; c=NULL; coef = NULL;
   draw->method = 1;
-  draw->type=1;
+  draw->type = 1;
 
   statusBar()->showMessage("Ready");
 }
@@ -236,6 +236,7 @@ void MyMainWindow::push_go(){
     if (draw->type==2){
       build_spline();
       setup_draw_residual_spline();
+      draw->update();
       build_newton_coef();
       setup_draw_residual_newton();
       draw->update();
