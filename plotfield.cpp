@@ -18,14 +18,9 @@ PlotField::~PlotField(){
 void PlotField::paintEvent(QPaintEvent *){
   QPainter painter(this);
   painter.setPen(QPen(Qt::black, 1));
-  int size;
+
   double inverse;
   double scale_x,scale_y;
-
-  if(width() > height())
-    size = height();
-  else
-    size = width();
 
   QPointF center, position, point;
   position = pos();
@@ -51,7 +46,7 @@ void PlotField::paintEvent(QPaintEvent *){
       point.setY(inverse);	
       painter.drawPoint(point);
     }
-    painter.setPen(QPen(Qt::blue, 1));
+    painter.setPen(QPen(Qt::blue, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
       point.setX(scale_x * point_list_1[i].x() + center.x());
       point.setY(scale_y * point_list_1[i].y() + center.y());
@@ -63,7 +58,7 @@ void PlotField::paintEvent(QPaintEvent *){
     return;
   }
   if (method==1 && type==2){
-    painter.setPen(QPen(Qt::blue, 1));
+    painter.setPen(QPen(Qt::blue, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
       point.setX(scale_x * point_list_1[i].x() + center.x());
       point.setY(scale_y * point_list_1[i].y() + center.y());
@@ -84,7 +79,7 @@ void PlotField::paintEvent(QPaintEvent *){
       point.setY(inverse);	
       painter.drawPoint(point);
     }
-    painter.setPen(QPen(Qt::green, 1));
+    painter.setPen(QPen(Qt::green, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
       point.setX(scale_x * point_list_2[i].x() + center.x());
       point.setY(scale_y * point_list_2[i].y() + center.y());
@@ -96,7 +91,7 @@ void PlotField::paintEvent(QPaintEvent *){
     return;
   }
   if (method==2 && type==2){
-    painter.setPen(QPen(Qt::green, 1));
+    painter.setPen(QPen(Qt::green, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
       point.setX(scale_x * point_list_2[i].x() + center.x());
       point.setY(scale_y * point_list_2[i].y() + center.y());
@@ -108,7 +103,7 @@ void PlotField::paintEvent(QPaintEvent *){
     return;
   }
   if (method==3){
-    painter.setPen(QPen(Qt::blue, 1));
+    painter.setPen(QPen(Qt::blue, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
       point.setX(scale_x * point_list_1[i].x() + center.x());
       point.setY(scale_y * point_list_1[i].y() + center.y());
@@ -117,7 +112,7 @@ void PlotField::paintEvent(QPaintEvent *){
       point.setY(inverse);	
       painter.drawPoint(point);
     }
-    painter.setPen(QPen(Qt::green, 1));
+    painter.setPen(QPen(Qt::green, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
       point.setX(scale_x * point_list_2[i].x() + center.x());
       point.setY(scale_y * point_list_2[i].y() + center.y());

@@ -1,6 +1,9 @@
 #ifndef PLOTFIELD
 #define PLOTFIELD
 
+#define EPS 1e-14
+#define DRAW_SIZE 1111
+
 #include <QtGui>
 
 class PlotField: public QWidget{ 
@@ -11,9 +14,6 @@ class PlotField: public QWidget{
     QPointF *point_list_1;
     QPointF *point_list_2;
     QPointF *point_list_f;
-
-    static const int DRAW_SIZE = 1111;
-    static const double EPS = 1e-15;
 
     int method;
     int type;

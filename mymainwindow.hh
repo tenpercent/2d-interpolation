@@ -12,8 +12,6 @@ class MyMainWindow : public QMainWindow
   public:
     MyMainWindow();
     ~MyMainWindow();
-    static const double EPS = 1e-14;
-    static const int DRAW_SIZE = 1111;
   private:
     QRect* geometry;
     QMenuBar *mainmenu;
@@ -24,6 +22,7 @@ class MyMainWindow : public QMainWindow
     QAction *graphic_plot;
     QAction *residual_plot;
     QWidget *my_widget;
+    QActionGroup *plot_action_group;
     QLabel *lbl;
 
     QMenu *file;
@@ -77,5 +76,6 @@ class MyMainWindow : public QMainWindow
   signals:
     void close_window();
     void counterChanged(int);
+    //void valueChanged(double);
 };
 #endif

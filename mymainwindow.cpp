@@ -118,6 +118,7 @@ QWidget *MyMainWindow::begin(){
   spin_box->setSingleStep(0.1);
   spin_box->setValue(0.0);
 
+  //connect(this, SIGNAL(valueChanged(double)), spin_box, SLOT(set_begin(double)));
   connect(spin_box, SIGNAL(valueChanged(double)), SLOT(set_begin(double)));
 
   QVBoxLayout *layout = new QVBoxLayout();
@@ -142,6 +143,8 @@ QWidget *MyMainWindow::end(){
   spin_box->setValue(1.0);
   spin_box->setMinimumHeight(32);
 
+  
+  //connect(this, SIGNAL(valueChanged(double)), spin_box, SLOT(set_end(double)));
   connect(spin_box, SIGNAL(valueChanged(double)), SLOT(set_end(double)));
 
   QVBoxLayout *layout = new QVBoxLayout();
@@ -180,11 +183,11 @@ void MyMainWindow::push_go(){
 
   double r=0.0;
   if(start >finish){
-        QMessageBox msgBox;
-        msgBox.setWindowTitle(QString::fromUtf8("Ошибка"));
-        msgBox.setText(QString::fromUtf8("Ошибка ввода! Повторите попытку."));
-        msgBox.exec();
-    return;
+        r = finish;
+        finish = start;
+        start = r;
+        //emit valueChanged(start);
+        //emit valueChanged(finish);
   }
   if (draw->method==1){
     build_newton_coef();

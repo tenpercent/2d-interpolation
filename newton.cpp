@@ -12,6 +12,10 @@ void MyMainWindow::build_newton_coef(){
   int i,j;
   double omega = (finish-start)/(count_points-1);
   double delta = omega;
+
+  if(delta<2.){}
+  //compiler, shut up!
+
   coef = new double[count_points];
   x = new double[count_points];
   f_x = new double[count_points];
@@ -42,9 +46,9 @@ double MyMainWindow::find_newton_value(double point){
   double value=0.;
   value = coef[count_points-1];
   
-  for (i =count_points-2; i>=0; --i){
+  for (i = count_points-2; i>=0; --i){
     value *= (point - x[i]);
-    value+=coef[i];
+    value += coef[i];
   }
   
   return value;
@@ -95,7 +99,7 @@ void MyMainWindow::setup_draw_newton(){
   }
   draw->x_max_module=max_module_x;
   draw->y_max_module=max_module_y;
-  draw->max_module= (max_module_x<max_module_y? max_module_y: max_module_x);
+  draw->max_module= (max_module_x<max_module_y ? max_module_y: max_module_x);
 }
 
 double MyMainWindow::residual_newton(){
