@@ -7,6 +7,8 @@ PlotField::PlotField(){
   point_list_1 = new QPointF[DRAW_SIZE];
   point_list_2 = new QPointF[DRAW_SIZE];
   point_list_f = new QPointF[DRAW_SIZE];
+  x_max_module = 1.;
+  y_max_module = 1.;
 }
 
 PlotField::~PlotField(){

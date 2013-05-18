@@ -31,30 +31,30 @@ class MyMainWindow : public QMainWindow
 
     QGridLayout *my_layout;
     QGroupBox *points();
-    QWidget *begin();		//поле для ввода начала отрезка
-    QWidget *end();		//поле для ввода конца отрезка
+    QWidget *begin();
+    QWidget *end();
 
-    int count_points;		//количество точек разбиения
-    double start;		//начало отрезка
-    double finish;		//конец отрезка
+    int count_points;
+    double start;
+    double finish;
     
-    double *table;		//таблица разделенных разностей
+    double *table;
     double *coef;
-    double *x,*f_x;		//узлы и значения в узлах функции
+    double *x,*f_x;
     double *c;
 
     double fdiff(int i, int j);
 
-    PlotField *draw;		//поле для рисования
+    PlotField *draw;
 
-    double f(double p);		//фунция, которую будем приближать
+    double f(double p);
 
     void setup_draw_function();
     void build_newton_coef();
     double find_newton_value(double p);
-    void setup_draw_newton();	//настройка данных и подготовка для рисования первого метода
-    void setup_draw_residual_newton();//настройка данных и подготовка для рисования невязки первого метода
-    double residual_newton();	//вычисление невязки первого метода 
+    void setup_draw_newton();
+    void setup_draw_residual_newton();
+    double residual_newton();
 
     void solve_system(double *a1, double *a2, double *a3, double *b, double *x);
     void build_spline();
@@ -76,6 +76,5 @@ class MyMainWindow : public QMainWindow
   signals:
     void close_window();
     void counterChanged(int);
-    //void valueChanged(double);
 };
 #endif

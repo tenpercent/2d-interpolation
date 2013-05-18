@@ -16,15 +16,12 @@ void MyMainWindow::solve_system(double *a, double *c, double *d, double *b, doub
 }
 
 void MyMainWindow::build_spline(){
-  //удаялем старые данные
   delete[] c;
   delete[] x;
   delete[] f_x;
 
-  //инициализация
   int i; double temp1,temp2;
   double omega= (finish-start)/(count_points-1);
-  //table = new double[count_points*count_points];
   x= new double[count_points];
   f_x= new double[count_points];
   c=new double[count_points*4];
@@ -118,9 +115,9 @@ void MyMainWindow::setup_draw_spline(){
     if(fabs(temp) >max_module_y)
       max_module_y = fabs(temp);
   }
-  draw->x_max_module=max_module_x;
-  draw->y_max_module=max_module_y;
-  draw->max_module= (max_module_x<max_module_y ? max_module_y : max_module_x);
+  draw->x_max_module2 = max_module_x;
+  draw->y_max_module2 = max_module_y;
+  draw->max_module2 = (max_module_x < max_module_y? max_module_y: max_module_x);
 }
 
 double MyMainWindow::residual_spline(){
@@ -157,7 +154,7 @@ void MyMainWindow::setup_draw_residual_spline(){
     if(fabs(temp) >max_module_y)
       max_module_y = fabs(temp);
   }
-  draw->x_max_module=max_module_x;
-  draw->y_max_module=max_module_y;
-  draw->max_module= (max_module_x<max_module_y? max_module_y: max_module_x);
+  draw->x_max_module2 = max_module_x;
+  draw->y_max_module2 = max_module_y;
+  draw->max_module2 = (max_module_x < max_module_y? max_module_y: max_module_x);
 }

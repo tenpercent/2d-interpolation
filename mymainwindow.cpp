@@ -11,7 +11,7 @@ MyMainWindow::MyMainWindow()
 
   newton_method = new QAction("&Newton polynomials", this);
   newton_method->setCheckable(true);
-  newton_method->setChecked(true);
+  //newton_method->setChecked(true);
   connect(newton_method, SIGNAL(triggered(bool)), SLOT(push_method_1()));
 
   splines_method = new QAction("&Splines", this);
@@ -40,11 +40,15 @@ MyMainWindow::MyMainWindow()
   plot->addAction(graphic_plot);
   plot->addAction(residual_plot);
 
+  plot_action_group = new QActionGroup(this);
+  graphic_plot->setActionGroup(plot_action_group);
+  residual_plot->setActionGroup(plot_action_group);
+
   connect(quit, SIGNAL(triggered()), qApp, SLOT(quit()));
 
   draw = new PlotField();
 
-  lbl = new QLabel(QString::fromUtf8("Невязка: -"));
+  lbl = new QLabel(QString::fromUtf8("Residual: 0.0"));
   count_points=16;
   my_widget = new QWidget();
   my_layout = new QGridLayout(); 
@@ -61,7 +65,7 @@ MyMainWindow::MyMainWindow()
   start=0;
   finish=1;
   x=NULL; f_x=NULL; c=NULL; coef = NULL;
-  draw->method = 1;
+  //draw->method = 1;
   draw->type = 1;
 
   statusBar()->showMessage("Ready");
@@ -81,7 +85,7 @@ QGroupBox *MyMainWindow::points(){
   int maxwidth = 40;
   QLabel *lable = new QLabel;
   QLabel *lable2 = new QLabel;
-  lable->setText(QString::fromUtf8("Количество точек:"));
+  lable->setText(QString::fromUtf8("Total points:"));
   lable->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
   lable2->setText(QString::number(count_points));
   lable2->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
@@ -110,7 +114,7 @@ QWidget *MyMainWindow::begin(){
   widget->setMaximumWidth(230);
 
   QLabel *lable = new QLabel;
-  lable->setText(QString::fromUtf8("Начало отрезка:"));
+  lable->setText(QString::fromUtf8("Left End:"));
 
   QDoubleSpinBox *spin_box = new QDoubleSpinBox;
   spin_box->setMinimumHeight(32);
@@ -135,14 +139,13 @@ QWidget *MyMainWindow::end(){
   widget->setMaximumWidth(230);
 
   QLabel *lable = new QLabel;
-  lable->setText(QString::fromUtf8("Конец отрезка:"));
+  lable->setText(QString::fromUtf8("Right End:"));
 
   QDoubleSpinBox *spin_box = new QDoubleSpinBox;
   spin_box->setRange(-5000.0, 5000.0);
   spin_box->setSingleStep(0.1);
   spin_box->setValue(1.0);
   spin_box->setMinimumHeight(32);
-
   
   //connect(this, SIGNAL(valueChanged(double)), spin_box, SLOT(set_end(double)));
   connect(spin_box, SIGNAL(valueChanged(double)), SLOT(set_end(double)));
@@ -179,67 +182,69 @@ void MyMainWindow::set_end(double x){
 void MyMainWindow::goodbye(){
   emit close_window();
 }
-void MyMainWindow::push_go(){
-
+void MyMainWindow::push_go()
+{
   double r=0.0;
-  if(start >finish){
-        r = finish;
-        finish = start;
-        start = r;
-        //emit valueChanged(start);
-        //emit valueChanged(finish);
+  if(start >finish || (draw->type!= 1 && draw->type!=2) || (draw->method !=1 && draw->method !=2 && draw->method !=3))
+  {
+    QMessageBox msgBox;
+    msgBox.setWindowTitle(QString::fromUtf8("Fatal Error!"));
+    msgBox.setText(QString::fromUtf8("JK. Please choose method"));
+    msgBox.exec();
+    return;
   }
-  if (draw->method==1){
+  if (draw->method==1)
+  {
     build_newton_coef();
     setup_draw_residual_newton();
     r=residual_newton();
-    if (fabs(r)<EPS) r=0.0;
-    if (draw->type==1){
+    if (fabs(r)<EPS) 
+      r=0.0;
+    if (draw->type==1)
+    {
       setup_draw_function();
-      setup_draw_newton();  
+      setup_draw_newton();
       draw->update();
     }
-    else{
+    else
+    {
       draw->update();
     }
-    lbl->setText(QString::fromUtf8("Невязка интерполяционной\n  формулы Ньютона: ") +
-                       QString::number(r));
-
-    statusBar()->showMessage(QString::fromUtf8("Residual:") + QString::number(r));
+    lbl->setText(QString::fromUtf8("Residual: ") + QString::number(r));
     return;
   }
-  if (draw->method==2){
+  if (draw->method==2)
+  {
     build_spline();
     setup_draw_residual_spline();
     r=residual_spline();
     if (fabs(r)<EPS) r=0.0;
-    if (draw->type==1){
+    if (draw->type==1)
+    {
       setup_draw_function();
       setup_draw_spline();
       draw->update();
     }
     else
       draw->update();
-    lbl->setText(QString::fromUtf8("Невязка кусочной интерполяции\n  кубическими сплайнами: ") +
-                       QString::number(r)); 
-
-    statusBar()->showMessage(QString::fromUtf8("Residual:") + QString::number(r));
-    //draw->update();
+    lbl->setText(QString::fromUtf8("Residual: ") + QString::number(r));  
+    draw->update();
   }
-  if (draw->method==3){
-    lbl->setText(QString::fromUtf8("Для просмотра невязки выберите\n  конкретный способ приближения"));
-    if (draw->type==1){
+  if (draw->method==3)
+  {
+    lbl->setText(QString::fromUtf8("Please choose one of the methods/n to view the residual"));
+    if (draw->type==1)
+    {
       build_newton_coef();
       setup_draw_newton();
-      draw->update();
       build_spline();
       setup_draw_spline();
       draw->update();
     }
-    if (draw->type==2){
+    if (draw->type==2)
+    {
       build_spline();
       setup_draw_residual_spline();
-      draw->update();
       build_newton_coef();
       setup_draw_residual_newton();
       draw->update();
@@ -249,24 +254,20 @@ void MyMainWindow::push_go(){
 }
 void MyMainWindow::push_method_1(){ 
   draw->method ^= 1;
-  //draw->method %= 4; 
   if (count_points>=64) count_points=64;
   emit counterChanged(count_points);
 }
 
 void MyMainWindow::push_method_2(){
   draw->method ^= 2;
-  //draw->method %= 4;
 }
 
 void MyMainWindow::push_graphic(){ 
-  draw->type ^= 1;
-  //draw->type %= 4;
+  draw->type = 1;
 }
 
 void MyMainWindow::push_residual(){
-  draw->type ^= 2;
-  //draw->type %= 4;
+  draw->type = 2;
 }
 
 double MyMainWindow::f(double p){

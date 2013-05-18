@@ -73,9 +73,9 @@ void MyMainWindow::setup_draw_function(){
     if(fabs(temp) >max_module_y)
       max_module_y = fabs(temp);
   }
-  draw->x_max_module=max_module_x;
-  draw->y_max_module=max_module_y;
-  draw->max_module= (max_module_x<max_module_y? max_module_y: max_module_x);
+  draw->x_max_module1 = max_module_x;
+  draw->y_max_module1 = max_module_y;
+  draw->max_module1 = (max_module_x<max_module_y? max_module_y: max_module_x);
 }
 
 void MyMainWindow::setup_draw_newton(){
@@ -97,9 +97,9 @@ void MyMainWindow::setup_draw_newton(){
     if(fabs(temp) >max_module_y)
       max_module_y = fabs(temp);
   }
-  draw->x_max_module=max_module_x;
-  draw->y_max_module=max_module_y;
-  draw->max_module= (max_module_x<max_module_y ? max_module_y: max_module_x);
+  draw->x_max_module1 = max_module_x;
+  draw->y_max_module1 = max_module_y;
+  draw->max_module1 = (max_module_x<max_module_y? max_module_y: max_module_x);
 }
 
 double MyMainWindow::residual_newton(){
@@ -137,7 +137,7 @@ void MyMainWindow::setup_draw_residual_newton(){
     if(fabs(temp) >max_module_y)
       max_module_y = fabs(temp);
   }
-  draw->x_max_module=max_module_x;
-  draw->y_max_module=max_module_y;
-  draw->max_module= (max_module_x<max_module_y? max_module_y: max_module_x);
+  draw->x_max_module1 = max_module_x;
+  draw->y_max_module1 = max_module_y;
+  draw->max_module1 = (max_module_x<max_module_y? max_module_y: max_module_x);
 }
