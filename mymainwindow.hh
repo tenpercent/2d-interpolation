@@ -31,8 +31,8 @@ class MyMainWindow : public QMainWindow
 
     QGridLayout *my_layout;
     QGroupBox *points();
-    QWidget *begin();
-    QWidget *end();
+    QWidget *left();
+    QWidget *right();
 
     int count_points;
     double start;
@@ -41,6 +41,7 @@ class MyMainWindow : public QMainWindow
     double *table;
     double *coef;
     double *x,*f_x;
+    //double *c1,*c2,*c3,*c4;
     double *c;
 
     double fdiff(int i, int j);
@@ -65,10 +66,9 @@ class MyMainWindow : public QMainWindow
   public slots:
     void set_points_plus();
     void set_points_minus();
-    void set_begin(double x);
-    void set_end(double x);
+    void set_left(double x);
+    void set_right(double x);
     void push_go();
-    void goodbye();
     void push_method_1();
     void push_method_2();
     void push_graphic();

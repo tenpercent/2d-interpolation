@@ -4,28 +4,28 @@
 PlotField::PlotField(){
   setBackgroundRole(QPalette::Light);
   setAutoFillBackground(true);
-  point_list_1 = new QPointF[DRAW_SIZE];
-  point_list_2 = new QPointF[DRAW_SIZE];
-  point_list_f = new QPointF[DRAW_SIZE];
+  point_list_newton = new QPointF[DRAW_SIZE];
+  point_list_splines = new QPointF[DRAW_SIZE];
+  point_list_function = new QPointF[DRAW_SIZE];
 
   //x_max_module = 1.;
   //y_max_module = 1.;
 }
 
 PlotField::~PlotField(){
-  delete[] point_list_1;
-  delete[] point_list_2;
-  delete[] point_list_f;
+  delete[] point_list_newton;
+  delete[] point_list_splines;
+  delete[] point_list_function;
 
-  delete color_splines;
-  delete color_newton;
-  delete color_splines_res;
-  delete color_newton_res;
+  //delete color_splines;
+  //delete color_newton;
+  //delete color_splines_res;
+  //delete color_newton_res;
 }
 
 void PlotField::paintEvent(QPaintEvent *){
   QPainter painter(this);
-  painter.setPen(QPen(Qt::black, 1));
+  painter.setPen(QPen(Qt::black, 1.5));
 
   double inverse;
   double scale_x,scale_y;
@@ -60,8 +60,8 @@ void PlotField::paintEvent(QPaintEvent *){
   if (method==1 && type==1){
     painter.setPen(QPen(Qt::darkGreen, 1));
     for(int i=0; i<DRAW_SIZE; ++i){
-      point.setX(scale_x * point_list_f[i].x() + center.x());
-      point.setY(scale_y * point_list_f[i].y() + center.y());
+      point.setX(scale_x * point_list_function[i].x() + center.x());
+      point.setY(scale_y * point_list_function[i].y() + center.y());
       inverse = 2 * (point.y() - center.y());
       inverse = point.y() - inverse;
       point.setY(inverse);	
@@ -69,8 +69,8 @@ void PlotField::paintEvent(QPaintEvent *){
     }
     painter.setPen(QPen(Qt::darkBlue, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
-      point.setX(scale_x * point_list_1[i].x() + center.x());
-      point.setY(scale_y * point_list_1[i].y() + center.y());
+      point.setX(scale_x * point_list_newton[i].x() + center.x());
+      point.setY(scale_y * point_list_newton[i].y() + center.y());
       inverse = 2 * (point.y() - center.y());
       inverse = point.y() - inverse;
       point.setY(inverse);
@@ -79,10 +79,10 @@ void PlotField::paintEvent(QPaintEvent *){
     return;
   }
   if (method==1 && type==2){
-    painter.setPen(QPen(Qt::darkMagenta, 2));
+    painter.setPen(QPen(Qt::magenta, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
-      point.setX(scale_x * point_list_1[i].x() + center.x());
-      point.setY(scale_y * point_list_1[i].y() + center.y());
+      point.setX(scale_x * point_list_newton[i].x() + center.x());
+      point.setY(scale_y * point_list_newton[i].y() + center.y());
       inverse = 2 * (point.y() - center.y());
       inverse = point.y() - inverse;
       point.setY(inverse);
@@ -93,8 +93,8 @@ void PlotField::paintEvent(QPaintEvent *){
   if (method==2 && type==1){
     painter.setPen(QPen(Qt::darkGreen, 1));
     for(int i=0; i<DRAW_SIZE; ++i){
-      point.setX(scale_x * point_list_f[i].x() + center.x());
-      point.setY(scale_y * point_list_f[i].y() + center.y());
+      point.setX(scale_x * point_list_function[i].x() + center.x());
+      point.setY(scale_y * point_list_function[i].y() + center.y());
       inverse = 2 * (point.y() - center.y());
       inverse = point.y() - inverse;
       point.setY(inverse);	
@@ -102,8 +102,8 @@ void PlotField::paintEvent(QPaintEvent *){
     }
     painter.setPen(QPen(Qt::darkYellow, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
-      point.setX(scale_x * point_list_2[i].x() + center.x());
-      point.setY(scale_y * point_list_2[i].y() + center.y());
+      point.setX(scale_x * point_list_splines[i].x() + center.x());
+      point.setY(scale_y * point_list_splines[i].y() + center.y());
       inverse = 2 * (point.y() - center.y());
       inverse = point.y() - inverse;
       point.setY(inverse);
@@ -112,10 +112,10 @@ void PlotField::paintEvent(QPaintEvent *){
     return;
   }
   if (method==2 && type==2){
-    painter.setPen(QPen(Qt::yellow, 2));
+    painter.setPen(QPen(Qt::green, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
-      point.setX(scale_x * point_list_2[i].x() + center.x());
-      point.setY(scale_y * point_list_2[i].y() + center.y());
+      point.setX(scale_x * point_list_splines[i].x() + center.x());
+      point.setY(scale_y * point_list_splines[i].y() + center.y());
       inverse = 2 * (point.y() - center.y());
       inverse = point.y() - inverse;
       point.setY(inverse);
@@ -126,8 +126,8 @@ void PlotField::paintEvent(QPaintEvent *){
   if (method==3){
     painter.setPen(QPen(Qt::darkBlue, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
-      point.setX(scale_x * point_list_1[i].x() + center.x());
-      point.setY(scale_y * point_list_1[i].y() + center.y());
+      point.setX(scale_x * point_list_newton[i].x() + center.x());
+      point.setY(scale_y * point_list_newton[i].y() + center.y());
       inverse = 2 * (point.y() - center.y());
       inverse = point.y() - inverse;
       point.setY(inverse);	
@@ -135,8 +135,8 @@ void PlotField::paintEvent(QPaintEvent *){
     }
     painter.setPen(QPen(Qt::darkYellow, 2));
     for(int i=0; i<DRAW_SIZE; ++i){
-      point.setX(scale_x * point_list_2[i].x() + center.x());
-      point.setY(scale_y * point_list_2[i].y() + center.y());
+      point.setX(scale_x * point_list_splines[i].x() + center.x());
+      point.setY(scale_y * point_list_splines[i].y() + center.y());
       inverse = 2 * (point.y() - center.y());
       inverse = point.y() - inverse;
       point.setY(inverse);

@@ -3,10 +3,13 @@
 ######################################################################
 
 TEMPLATE = app
+CONFIG += debug
 #TARGET = 
 DEPENDPATH += .
 INCLUDEPATH += .
 
+
 # Input
 HEADERS += mymainwindow.hh plotfield.hh
-SOURCES += mymainwindow.cpp main.cpp plotfield-mod.cpp splines.cpp newton.cpp
+SOURCES += mymainwindow.cpp main.cpp plotfield-mod.cpp splines.cpp newton.cpp function.cpp
+QMAKE_CXXFLAGS += -pg

@@ -11,9 +11,9 @@ class PlotField: public QWidget{
   public:
     PlotField();
     ~PlotField();
-    QPointF *point_list_1;
-    QPointF *point_list_2;
-    QPointF *point_list_f;
+    QPointF *point_list_newton;
+    QPointF *point_list_splines;
+    QPointF *point_list_function;
 
     QPen *color_newton;
     QPen *color_splines;

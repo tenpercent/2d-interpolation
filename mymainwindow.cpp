@@ -55,8 +55,8 @@ MyMainWindow::MyMainWindow()
   setMenuBar(mainmenu);
   my_layout->addWidget(draw, 0, 0, 8, 10);
   my_layout->addWidget(points(),10,0,1,1);
-  my_layout->addWidget(begin(),10,1,1,1);
-  my_layout->addWidget(end(),10,2,1,1);
+  my_layout->addWidget(left(),10,1,1,1);
+  my_layout->addWidget(right(),10,2,1,1);
   my_layout->addWidget(lbl,10,3,1,2);
   my_widget->setLayout(my_layout);
   setCentralWidget(my_widget);
@@ -64,7 +64,7 @@ MyMainWindow::MyMainWindow()
   count_points=16;
   start=0;
   finish=1;
-  x=NULL; f_x=NULL; c=NULL; coef = NULL;
+  x=NULL; f_x=NULL; /*c1=NULL; c2=NULL, c3=NULL, c4=NULL, */ c=NULL; coef = NULL;
   //draw->method = 1;
   draw->type = 1;
 
@@ -75,6 +75,12 @@ MyMainWindow::~MyMainWindow(){
   delete[] coef;
   delete[] x;
   delete[] f_x;
+  /*
+  delete[] c1;
+  delete[] c2;
+  delete[] c3;
+  delete[] c4;
+  */
   delete[] c;
   delete draw;
   delete my_layout;
@@ -108,7 +114,7 @@ QGroupBox *MyMainWindow::points(){
   return group_box;
 }
 
-QWidget *MyMainWindow::begin(){
+QWidget *MyMainWindow::left(){
   QWidget *widget = new QWidget();
   widget->setMaximumHeight(80);
   widget->setMaximumWidth(230);
@@ -123,7 +129,7 @@ QWidget *MyMainWindow::begin(){
   spin_box->setValue(0.0);
 
   //connect(this, SIGNAL(valueChanged(double)), spin_box, SLOT(set_begin(double)));
-  connect(spin_box, SIGNAL(valueChanged(double)), SLOT(set_begin(double)));
+  connect(spin_box, SIGNAL(valueChanged(double)), SLOT(set_left(double)));
 
   QVBoxLayout *layout = new QVBoxLayout();
   layout->addWidget(lable);
@@ -133,7 +139,7 @@ QWidget *MyMainWindow::begin(){
   return widget;
 }
 
-QWidget *MyMainWindow::end(){
+QWidget *MyMainWindow::right(){
   QWidget *widget = new QWidget();
   widget->setMaximumHeight(80);
   widget->setMaximumWidth(230);
@@ -148,7 +154,7 @@ QWidget *MyMainWindow::end(){
   spin_box->setMinimumHeight(32);
   
   //connect(this, SIGNAL(valueChanged(double)), spin_box, SLOT(set_end(double)));
-  connect(spin_box, SIGNAL(valueChanged(double)), SLOT(set_end(double)));
+  connect(spin_box, SIGNAL(valueChanged(double)), SLOT(set_right(double)));
 
   QVBoxLayout *layout = new QVBoxLayout();
   layout->addWidget(lable);
@@ -173,14 +179,11 @@ void MyMainWindow::set_points_minus(){
   emit counterChanged(count_points);
 }
 
-void MyMainWindow::set_begin(double x){
+void MyMainWindow::set_left(double x){
   MyMainWindow::start =x;
 }
-void MyMainWindow::set_end(double x){
+void MyMainWindow::set_right(double x){
   MyMainWindow::finish =x;
-}
-void MyMainWindow::goodbye(){
-  emit close_window();
 }
 void MyMainWindow::push_go()
 {
@@ -270,8 +273,3 @@ void MyMainWindow::push_residual(){
   draw->type = 2;
 }
 
-double MyMainWindow::f(double p){
-  return qExp(p);
-  //return (p*p*p+3*p);
-  //return 1;
-}

@@ -67,9 +67,9 @@ void MyMainWindow::setup_draw_function(){
     if(fabs(current_x) >max_module_x)
       max_module_x = fabs(current_x);
     
-    draw->point_list_f[i].setX(current_x);
+    draw->point_list_function[i].setX(current_x);
     temp=f(current_x);
-    draw->point_list_f[i].setY(temp);
+    draw->point_list_function[i].setY(temp);
     if(fabs(temp) >max_module_y)
       max_module_y = fabs(temp);
   }
@@ -91,9 +91,9 @@ void MyMainWindow::setup_draw_newton(){
     if(fabs(current_x) >max_module_x)
       max_module_x = fabs(current_x);
     
-    draw->point_list_1[i].setX(current_x);
+    draw->point_list_newton[i].setX(current_x);
     temp = find_newton_value(current_x);
-    draw->point_list_1[i].setY(temp);
+    draw->point_list_newton[i].setY(temp);
     if(fabs(temp) >max_module_y)
       max_module_y = fabs(temp);
   }
@@ -108,7 +108,7 @@ double MyMainWindow::residual_newton(){
   double module;
 
   for(i= 0; i<DRAW_SIZE; ++i){
-    module = fabs(draw->point_list_1[i].y());
+    module = fabs(draw->point_list_newton[i].y());
 
     if(module > max_module)
       max_module =module;
@@ -129,11 +129,11 @@ void MyMainWindow::setup_draw_residual_newton(){
     if(fabs(current_x) >max_module_x)
       max_module_x = fabs(current_x);
     
-    draw->point_list_1[i].setX(current_x);
+    draw->point_list_newton[i].setX(current_x);
     temp=find_newton_value(current_x);
     temp=f(current_x)-temp;
     if (fabs(temp)<(EPS)) temp=0.0;
-    draw->point_list_1[i].setY(temp);
+    draw->point_list_newton[i].setY(temp);
     if(fabs(temp) >max_module_y)
       max_module_y = fabs(temp);
   }
